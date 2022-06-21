@@ -1,7 +1,6 @@
 package config
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
@@ -20,7 +19,7 @@ var (
 func Carregar() {
 	var err error
 
-	if err = godotenv.Load(); err != nil {
+	if err = godotenv.Load("../.env"); err != nil {
 		log.Fatal(err)
 	}
 
@@ -36,24 +35,3 @@ func Carregar() {
 	)
 
 }
-
-func ConectarDB() (*sql.DB, error) {
-	db, err := sql.Open("postgres", StringConexaoPostgres)
-	if err != nil {
-		return nil, err
-	}
-
-	if err = db.Ping(); err != nil {
-		db.Close()
-		return nil, err
-	}
-
-	return db, nil
-}
-
-// 	//Criar usuario
-
-// func CriarUsuarioDB() {
-// 	db := ConectarDB()
-// 	defer db.Close()
-// }

@@ -2,16 +2,14 @@ version: '3.8'
 
 services:
 
-  dbpostgres:
+  postgres:
     image: postgres
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
+       POSTGRES_USER: postgres
+       POSTGRES_PASSWORD: master
+       POSTGRES_DB: postgresql
     ports:
       - "15432:5432"
     volumes:
-      - /dbpostgres:/var/lib/postgresql/data 
-
-volumes:
-  dbpostgres:
+      - ./postgres:/var/lib/postgresql/data
+      - ./_scripts/postgres:/docker-entrypoint-initdb.d
