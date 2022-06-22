@@ -9,7 +9,6 @@ type Usuario struct {
 	CPFCNPJ string  `json:"cpf_cnpj"`
 	Saldo   float64 `json:"saldo"`
 	Senha   string  `json:"senha"`
-	isCFP   bool    `json:"is_cpf"`
 	Tipo    string  `json:"tipo"`
 }
 
