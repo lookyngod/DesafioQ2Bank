@@ -7,12 +7,6 @@ import (
 )
 
 func UsuariosHandler(w http.ResponseWriter, r *http.Request) {
-
-	if r.Method == http.MethodPost {
-		transport.InsereUsuario(w, r)
-		return
-	}
-
 	if r.Method == http.MethodGet {
 		transport.BuscaTodosUsuarios(w, r)
 		return

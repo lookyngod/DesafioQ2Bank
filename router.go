@@ -1,8 +1,7 @@
 package main
 
 import (
-	"DESAFIOQ2BANK/api/db"
-	"DESAFIOQ2BANK/api/domains/transport"
+	"DESAFIOQ2BANK/api/rest"
 	"fmt"
 	"log"
 	"net/http"
@@ -12,15 +11,14 @@ import (
 
 func main() {
 	// config.Carregar()
-
-	db.ConectarDB()
-
 	router := mux.NewRouter()
 	r := router.PathPrefix("/api").Subrouter()
 
 	//ROTAS DE INTEGRAÇÃO COM BACK END
 
-	r.HandleFunc("/buscausuarios", (transport.BuscaTodosUsuarios))
+	r.HandleFunc("/buscausuarios", (rest.UsuariosHandler))
+	r.HandleFunc("/deletarusuario", (rest.DeleteHandler))
+
 	http.Handle("/", router)
 
 	log.Printf("Padronizando para porta %d", 5000)

@@ -16,6 +16,10 @@ var (
 
 //Regex para não aceitar letras
 
+func RemoveMask(s string) string {
+	return allCarRe.ReplaceAllString(s, "")
+}
+
 func OnlyNumbers(s string) string {
 	return allNumRe.ReplaceAllString(s, "")
 }
