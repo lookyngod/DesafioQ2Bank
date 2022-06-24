@@ -17,7 +17,9 @@ func main() {
 	//ROTAS DE INTEGRAÇÃO COM BACK END
 
 	r.HandleFunc("/buscausuarios", (rest.UsuariosHandler))
-	r.HandleFunc("/deletarusuario", (rest.DeleteHandler))
+	r.HandleFunc("/buscausuario/{id}", (rest.UsuarioHandler))
+
+	r.HandleFunc("/buscatransacoes", (rest.TransacoesHandler))
 
 	http.Handle("/", router)
 

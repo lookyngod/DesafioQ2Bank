@@ -9,7 +9,9 @@ import (
 )
 
 const (
-	ErroCPFCNPJDuplicado = "pq: duplicate key value violates unique constraint \"usuarios_pkey\""
+	ErroUsuarioDuplicado = "pq: duplicate key value violates unique constraint \"usuarios_pkey\""
+
+	ERROIDNAOENCONTRADO = "sql: no rows in result set"
 )
 
 func ConectarDB() (*sql.DB, error) {
@@ -37,9 +39,19 @@ func BuscaTodosUsuarios(db *sql.DB) ([]models.Usuario, error) {
 		var row models.Usuario
 		err = rows.Scan(&row.ID, &row.Nome, &row.Tipo, &row.CPFCNPJ, &row.Email, &row.Senha, &row.Saldo)
 		if err != nil {
-			return nil, fmt.Errorf("falha na execução da busca de todos os cpf no postgres: %v", err)
+			return nil, fmt.Errorf("falha na execução da busca de todos os usuários no postgres: %v", err)
 		}
 		registros = append(registros, row)
 	}
 	return registros, nil
+}
+
+func BuscaUsuarioID(db *sql.DB, id string) (models.Usuario, error) {
+	var row models.Usuario
+	err := db.QueryRow("SELECT * FROM usuarios WHERE id=$1", id).Scan(&row.ID, &row.Nome, &row.Tipo, &row.CPFCNPJ, &row.Email, &row.Senha, &row.Saldo)
+	if err != nil {
+		return row, fmt.Errorf("falha na execução da busca de usuário no postgres: %v", err)
+	}
+	return row, nil
+
 }

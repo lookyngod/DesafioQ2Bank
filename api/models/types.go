@@ -5,7 +5,7 @@ import (
 )
 
 type Usuario struct {
-	ID      string `json:"id"`
+	ID      int64  `json:"id"`
 	Nome    string `json:"nome"`
 	Email   string `json:"email"`
 	CPFCNPJ string `json:"cpf_cnpj"`
@@ -15,7 +15,7 @@ type Usuario struct {
 }
 
 type Transacao struct {
-	ID        string    `json:"id"`
+	ID        int64     `json:"id"`
 	IDOrigem  string    `json:"usuario"`
 	IDDestino string    `json:"usuario_destino"`
 	Valor     string    `json:"valor"`
