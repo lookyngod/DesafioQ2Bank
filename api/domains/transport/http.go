@@ -2,10 +2,17 @@ package transport
 
 import (
 	"DESAFIOQ2BANK/api/domains"
+	"DESAFIOQ2BANK/api/models"
 	"DESAFIOQ2BANK/api/utils"
+	"encoding/json"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/gorilla/mux"
+)
+
+var (
+	reqT = models.Transacao{}
 )
 
 func BuscaTodosUsuarios(w http.ResponseWriter, r *http.Request) {
@@ -70,4 +77,27 @@ func BuscaTransacaoID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	utils.RespondWithJSON(w, http.StatusOK, dados)
+}
+
+func InserirTransacao(w http.ResponseWriter, r *http.Request) {
+	pg, err := domains.ConectarDB()
+	if err != nil {
+		utils.RespondWithError(w, http.StatusInternalServerError, 0, "Erro ao conectar ao banco de dados")
+		return
+	}
+
+	resp, _ := ioutil.ReadAll(r.Body)
+	err = json.Unmarshal(resp, &reqT)
+	if err != nil {
+		utils.RespondWithError(w, http.StatusOK, 0, err.Error())
+		return
+	}
+
+	err = domains.InserirTransacao(pg, reqT)
+	if err != nil {
+		utils.RespondWithError(w, http.StatusOK, 0, err.Error())
+		return
+	}
+
+	utils.RespondWithJSON(w, http.StatusOK, "Transação inserida com sucesso")
 }

@@ -32,7 +32,7 @@ func ValidaMock(JSONMock JSONMock) bool {
 
 func BuscaTransacaoID(db *sql.DB, id string) (models.Transacao, error) {
 	var row models.Transacao
-	err := db.QueryRow("SELECT * FROM transacoes WHERE id=$1", id).Scan(&row.ID, &row.IDOrigem, &row.IDDestino, &row.Valor, &row.Data)
+	err := db.QueryRow("SELECT * FROM transacao WHERE id=$1", id).Scan(&row.ID, &row.IDOrigem, &row.IDDestino, &row.Valor, &row.Data)
 	if err != nil {
 		return row, fmt.Errorf("falha na execução da busca de transação no postgres: %v", err)
 	}
@@ -41,7 +41,7 @@ func BuscaTransacaoID(db *sql.DB, id string) (models.Transacao, error) {
 
 func BuscaTodasTransacoes(db *sql.DB) ([]models.Transacao, error) {
 	var registros []models.Transacao
-	rows, err := db.Query("SELECT * FROM transacoes")
+	rows, err := db.Query("SELECT * FROM transacao")
 	if err != nil {
 		return nil, fmt.Errorf("falha na execução da busca de todas as transações no postgres: %v", err)
 	}
@@ -54,4 +54,12 @@ func BuscaTodasTransacoes(db *sql.DB) ([]models.Transacao, error) {
 		registros = append(registros, row)
 	}
 	return registros, nil
+}
+
+func InserirTransacao(db *sql.DB, T models.Transacao) error {
+	_, err := db.Exec("INSERT INTO transacao VALUES ($1, $2, $3, $4, $5)", "", T.IDOrigem, T.IDDestino, T.Valor, T.Data)
+	if err != nil {
+		return fmt.Errorf("falha na execução da inserção de transação no postgres: %v", err)
+	}
+	return nil
 }

@@ -29,3 +29,19 @@ func TransacoesHandler(w http.ResponseWriter, r *http.Request) {
 		transport.BuscaTodasTransacoes(w, r)
 		return
 	}
+	utils.RespondWithError(w, http.StatusBadRequest, 0, "Método não permitido")
+
+}
+
+func TransacaoHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		transport.BuscaTransacaoID(w, r)
+		return
+	}
+
+	if r.Method == http.MethodPost {
+		transport.InserirTransacao(w, r)
+		return
+	}
+	utils.RespondWithError(w, http.StatusBadRequest, 0, "Método não permitido")
+}

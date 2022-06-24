@@ -20,6 +20,8 @@ func main() {
 	r.HandleFunc("/buscausuario/{id}", (rest.UsuarioHandler))
 
 	r.HandleFunc("/buscatransacoes", (rest.TransacoesHandler))
+	r.HandleFunc("/buscatransacao/{id}", (rest.TransacaoHandler))
+	r.HandleFunc("/inserirtransacao", (rest.TransacaoHandler))
 
 	http.Handle("/", router)
 

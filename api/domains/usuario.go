@@ -55,3 +55,11 @@ func BuscaUsuarioID(db *sql.DB, id string) (models.Usuario, error) {
 	return row, nil
 
 }
+
+func AtualizaSaldo(db *sql.DB, id string, saldo float64) error {
+	_, err := db.Exec("UPDATE usuarios SET saldo=$1 WHERE id=$2", saldo, id)
+	if err != nil {
+		return fmt.Errorf("falha na execução da atualização de saldo no postgres: %v", err)
+	}
+	return nil
+}
