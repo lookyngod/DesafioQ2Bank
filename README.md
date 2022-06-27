@@ -10,9 +10,6 @@ A aplicação API tem como responsabilidade fornecer uma tabela com CPF e CNPJ q
 - Golang
 - Docker
 - Docker Compose
- 
- PS: Para logs direto do BackEnd, recomendo usar Postman com os endpoints inseridos no Router.go
-
 
 ## Instalação
 
@@ -51,3 +48,5 @@ Requisições para a API devem seguir os padrões:
 | `POST` | Utilizado para inserir uma transação no banco de dados|
 
 ## Notes
+
+Para este desafio optei por usar uma arquitetura monólito por já ter alguma familiaridade e com algumas premissas da arquitetura de microsserviços, infelizmente não consegui finalizar a execução da transação, pois não consegui idenficar um método simples para tratar na hora do recebimento da requisição via REST
