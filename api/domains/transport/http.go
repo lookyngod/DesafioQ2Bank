@@ -37,7 +37,7 @@ func BuscaUsuarioID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id := mux.Vars(r)["id"]
+	id := r.FormValue("id")
 
 	dados, err := domains.BuscaUsuarioID(pg, id)
 	if err != nil {

@@ -3,36 +3,12 @@ package domains
 import (
 	"DESAFIOQ2BANK/api/models"
 	"database/sql"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 )
-
-type JSONMock struct {
-	Authorization bool `json:"authorization"`
-}
-
-func ValidaMock(JSONMock JSONMock) bool {
-	valida, err := http.Get("https://run.mocky.io/v3/d02168c6-d88d-4ff2-aac6-9e9eb3425e31")
-	if err != nil {
-		return false
-	}
-
-	val, _ := ioutil.ReadAll(valida.Body)
-
-	err = json.Unmarshal(val, &JSONMock)
-	if err != nil {
-		return false
-	}
-
-	return JSONMock.Authorization
-
-}
 
 func BuscaTransacaoID(db *sql.DB, id string) (models.Transacao, error) {
 	var row models.Transacao
-	err := db.QueryRow("SELECT * FROM transacao WHERE id=$1", id).Scan(&row.ID, &row.IDOrigem, &row.IDDestino, &row.Valor, &row.Data)
+	err := db.QueryRow("SELECT * FROM transacao WHERE id=$1", id).Scan(&row.ID, &row.IDOrigem, &row.IDDestino, &row.Valor)
 	if err != nil {
 		return row, fmt.Errorf("falha na execução da busca de transação no postgres: %v", err)
 	}
@@ -47,7 +23,7 @@ func BuscaTodasTransacoes(db *sql.DB) ([]models.Transacao, error) {
 	}
 	for rows.Next() {
 		var row models.Transacao
-		err = rows.Scan(&row.ID, &row.IDOrigem, &row.IDDestino, &row.Valor, &row.Data)
+		err = rows.Scan(&row.ID, &row.IDOrigem, &row.IDDestino, &row.Valor)
 		if err != nil {
 			return nil, fmt.Errorf("falha na execução da busca de todas as transações no postgres: %v", err)
 		}
@@ -57,7 +33,7 @@ func BuscaTodasTransacoes(db *sql.DB) ([]models.Transacao, error) {
 }
 
 func InserirTransacao(db *sql.DB, T models.Transacao) error {
-	_, err := db.Exec("INSERT INTO transacao VALUES ($1, $2, $3, $4, $5)", "", T.IDOrigem, T.IDDestino, T.Valor, T.Data)
+	_, err := db.Exec("INSERT INTO transacao VALUES ($1, $2, $3, $4)", T.ID, T.IDOrigem, T.IDDestino, T.Valor)
 	if err != nil {
 		return fmt.Errorf("falha na execução da inserção de transação no postgres: %v", err)
 	}

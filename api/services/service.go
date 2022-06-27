@@ -3,23 +3,28 @@ package services
 import (
 	"DESAFIOQ2BANK/api/domains"
 	"DESAFIOQ2BANK/api/models"
+	"encoding/json"
 	"fmt"
+	"net/http"
 )
 
 var (
 	loj, com models.Usuario
-	err      error
 )
+
+type JSONMock struct {
+	Authorization bool `json:"authorization"`
+}
 
 func NovaTransacao(T models.Transacao) (string, error) {
 	db, _ := domains.ConectarDB()
-	mock, err := domains.ValidaMock()
+	mock, err := ValidaMock()
 	if err != nil {
 		return "Erro na Validação do Mock", err
 	}
 
-	if mock != true {
-		return "Mock não autorizado", err
+	if !mock {
+		return "Erro na Inserção da Transação", err
 	}
 
 	loj, err = domains.BuscaUsuarioID(db, T.IDOrigem)
@@ -33,12 +38,13 @@ func NovaTransacao(T models.Transacao) (string, error) {
 	}
 
 	valid, c := ValidarSaldo(loj, T.Valor)
-	if valid != true {
-		valid := fmt.Sprintf("Não autorizado, saldo insuficiente:%", c)
+
+	if !valid {
+		valid := fmt.Sprintf("Não autorizado, saldo insuficiente: %v", c)
 		return valid, err
 	}
 
-	err = domains.InserirTransacao(T)
+	err = domains.InserirTransacao(db, T)
 	if err != nil {
 		return "Erro ao inserir transação", err
 	}
@@ -46,12 +52,12 @@ func NovaTransacao(T models.Transacao) (string, error) {
 	loj.Saldo -= T.Valor
 	com.Saldo += T.Valor
 
-	err = domains.AtualizaSaldo(loj)
+	err = domains.AtualizaSaldo(db, loj)
 	if err != nil {
 		return "Erro ao atualizar saldo", err
 	}
 
-	err = domains.AtualizaSaldo(com)
+	err = domains.AtualizaSaldo(db, com)
 	if err != nil {
 		return "Erro ao atualizar saldo", err
 	}
@@ -73,4 +79,21 @@ func ValidarSaldo(usu models.Usuario, Saldo float64) (bool, string) {
 
 	return true, ""
 
+}
+
+func ValidaMock() (bool, error) {
+	var jsonMock JSONMock
+
+	valida, err := http.Get("https://run.mocky.io/v3/d02168c6-d88d-4ff2-aac6-9e9eb3425e31")
+	if err != nil {
+		return false, err
+
+	}
+
+	err = json.NewDecoder(valida.Body).Decode(&jsonMock)
+	if err != nil {
+		return false, err
+	}
+
+	return jsonMock.Authorization, nil
 }

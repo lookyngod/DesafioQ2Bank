@@ -2,8 +2,14 @@ package rest
 
 import (
 	"DESAFIOQ2BANK/api/domains/transport"
+	"DESAFIOQ2BANK/api/models"
+	"DESAFIOQ2BANK/api/services"
 	"DESAFIOQ2BANK/api/utils"
 	"net/http"
+)
+
+var (
+	tran = models.Transacao{}
 )
 
 func UsuariosHandler(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +46,7 @@ func TransacaoHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == http.MethodPost {
-		transport.InserirTransacao(w, r)
+		services.NovaTransacao(tran)
 		return
 	}
 	utils.RespondWithError(w, http.StatusBadRequest, 0, "Método não permitido")

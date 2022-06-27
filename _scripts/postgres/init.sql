@@ -10,8 +10,7 @@ Saldo FLOAT NOT NULL);
 CREATE TABLE Transacao (ID SERIAL PRIMARY KEY UNIQUE,
  IDOrigem int NOT NULL,
   IDDestino int NOT NULL,
-   Valor FLOAT NOT NULL,
-    Data Date NOT NULL);
+   Valor FLOAT NOT NULL);
 
 ALTER TABLE Transacao 
 ADD FOREIGN KEY (IDOrigem) REFERENCES Usuarios(ID);
