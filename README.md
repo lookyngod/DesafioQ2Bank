@@ -26,7 +26,7 @@ docker-compose up
 ```
 
 ### Passo 2:
-Após a inicialização do docker-compose, entre na pasta '/api' e em um novo terminal, rode o comando:
+Após a inicialização do docker-compose, ainda na raiz e em um novo terminal, rode o comando:
 ```sh
 go run router.go
 ```
