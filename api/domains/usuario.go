@@ -8,11 +8,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-const (
-	ErroUsuarioDuplicado = "pq: duplicate key value violates unique constraint \"usuarios_pkey\""
-
-	ERROIDNAOENCONTRADO = "sql: no rows in result set"
-)
+//CONEXÃO COM BANCO DE DADOS
 
 func ConectarDB() (*sql.DB, error) {
 	db, err := sql.Open("postgres", "host=localhost port=15432 user=postgres password=master dbname=postgresql sslmode=disable")
@@ -46,6 +42,8 @@ func BuscaTodosUsuarios(db *sql.DB) ([]models.Usuario, error) {
 	return registros, nil
 }
 
+//QUERY PARA BUSCA DE USUARIO POR ID
+
 func BuscaUsuarioID(db *sql.DB, id string) (models.Usuario, error) {
 	var row models.Usuario
 	err := db.QueryRow("SELECT * FROM usuarios WHERE id=$1", id).Scan(&row.ID, &row.Nome, &row.Tipo, &row.CPFCNPJ, &row.Email, &row.Senha, &row.Saldo)
@@ -55,6 +53,8 @@ func BuscaUsuarioID(db *sql.DB, id string) (models.Usuario, error) {
 	return row, nil
 
 }
+
+//QUERY PARA ATUALIZAR SALDO DO USUÁRIO
 
 func AtualizaSaldo(db *sql.DB, usu models.Usuario) error {
 	_, err := db.Exec("UPDATE usuarios SET saldo=$1 WHERE id=$2", usu.Saldo, usu.ID)

@@ -6,6 +6,8 @@ import (
 	"fmt"
 )
 
+//QUERY PARA BUSCAR TRANSACAO POR ID
+
 func BuscaTransacaoID(db *sql.DB, id string) (models.Transacao, error) {
 	var row models.Transacao
 	err := db.QueryRow("SELECT * FROM transacao WHERE id=$1", id).Scan(&row.ID, &row.IDOrigem, &row.IDDestino, &row.Valor)
@@ -14,6 +16,8 @@ func BuscaTransacaoID(db *sql.DB, id string) (models.Transacao, error) {
 	}
 	return row, nil
 }
+
+//QUERY PARA BUSCAR TODAS AS TRANSACOES
 
 func BuscaTodasTransacoes(db *sql.DB) ([]models.Transacao, error) {
 	var registros []models.Transacao
@@ -31,6 +35,8 @@ func BuscaTodasTransacoes(db *sql.DB) ([]models.Transacao, error) {
 	}
 	return registros, nil
 }
+
+//QUERY PARA GRAVAR UMA TRANSAÇÃO
 
 func InserirTransacao(db *sql.DB, T models.Transacao) error {
 	_, err := db.Exec("INSERT INTO transacao VALUES ($1, $2, $3, $4)", T.ID, T.IDOrigem, T.IDDestino, T.Valor)

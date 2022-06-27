@@ -12,6 +12,8 @@ var (
 	tran = models.Transacao{}
 )
 
+//Handler para buscar todos os usuários
+
 func UsuariosHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		transport.BuscaTodosUsuarios(w, r)
@@ -22,6 +24,8 @@ func UsuariosHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+//Handler para buscar usuário por ID
+
 func UsuarioHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		transport.BuscaUsuarioID(w, r)
@@ -29,6 +33,8 @@ func UsuarioHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	utils.RespondWithError(w, http.StatusBadRequest, 0, "Método não permitido")
 }
+
+//Handler para buscar todas as transações
 
 func TransacoesHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
@@ -38,6 +44,8 @@ func TransacoesHandler(w http.ResponseWriter, r *http.Request) {
 	utils.RespondWithError(w, http.StatusBadRequest, 0, "Método não permitido")
 
 }
+
+//Handler para buscar transação por ID e fazer uma nova transação
 
 func TransacaoHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {

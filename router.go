@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-	// config.Carregar()
 	router := mux.NewRouter()
 	r := router.PathPrefix("/api").Subrouter()
 

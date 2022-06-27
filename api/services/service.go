@@ -16,6 +16,8 @@ type JSONMock struct {
 	Authorization bool `json:"authorization"`
 }
 
+//Validações para uma transação aprovada
+
 func NovaTransacao(T models.Transacao) (string, error) {
 	db, _ := domains.ConectarDB()
 	mock, err := ValidaMock()
@@ -66,6 +68,8 @@ func NovaTransacao(T models.Transacao) (string, error) {
 
 }
 
+// Validação de saldo e qual tipo de usuário
+
 func ValidarSaldo(usu models.Usuario, Saldo float64) (bool, string) {
 
 	if usu.Tipo != "Comum" {
@@ -80,6 +84,8 @@ func ValidarSaldo(usu models.Usuario, Saldo float64) (bool, string) {
 	return true, ""
 
 }
+
+// Validação da autorização mock
 
 func ValidaMock() (bool, error) {
 	var jsonMock JSONMock
