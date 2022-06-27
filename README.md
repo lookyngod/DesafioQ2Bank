@@ -3,8 +3,6 @@ Temos 2 tipos de usuários, os comuns e lojistas, ambos têm carteira com dinhei
 realizam transferências entre eles. Vamos nos atentar somente ao fluxo de
 transferência entre dois usuários.
 
-A aplicação API tem como responsabilidade fornecer uma tabela com CPF e CNPJ quando inseridos.
-
 ## Stack
 
 - Golang
