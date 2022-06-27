@@ -47,4 +47,4 @@ Requisições para a API devem seguir os padrões:
 
 ## Notes
 
-Para este desafio optei por usar uma arquitetura monólito por já ter alguma familiaridade e com algumas premissas da arquitetura de microsserviços, infelizmente não consegui finalizar a execução da transação, pois não consegui idenficar um método simples para tratar na hora do recebimento da requisição via REST
+Para este desafio optei por usar uma arquitetura monólito por já ter alguma familiaridade e com algumas premissas da arquitetura de microsserviços, infelizmente não consegui finalizar a execução da transação, pois não consegui identificar um método simples para tratar na hora do recebimento da requisição via REST
