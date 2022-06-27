@@ -29,8 +29,6 @@ Após a inicialização do docker-compose, ainda na raiz e em um novo terminal, 
 go run router.go
 ```
 
-### Passo 3:
-
 - *Prontinho, sua aplicação está no ar!*
 
 ## Como testar a aplicação?
