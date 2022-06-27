@@ -36,7 +36,7 @@ go run router.go
 - *Prontinho, sua aplicação está no ar!*
 
 ## Como testar a aplicação?
-- Por padrão sua aplicação front irá rodar na porta 5000 ```http://localhost:5000/api/{endpoints}```
+- Por padrão sua aplicação irá rodar na porta 5000 ```http://localhost:5000/api/{endpoints}```
 - A aplicação contém um prefixo rota '/api' para teste via Postman com arquivo JSON ```http://localhost:5000/api```
 
 
